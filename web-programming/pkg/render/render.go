@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"web-programming/pkg/config"
+	"web-programming/pkg/models"
 )
 
 var app *config.AppConfig
@@ -14,16 +15,20 @@ var app *config.AppConfig
 func NewTemplates(a *config.AppConfig) {
 	app = a
 }
+func addDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
 
 // RenderTemplate renders a template
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
 	// get requested template from cache
 	t, ok := app.TemplateCache[tmpl]
 	if !ok {
 		log.Println("not able to find template within a cache")
 	}
 	buff := new(bytes.Buffer)
-	err := t.Execute(buff, nil)
+	td := addDefaultData(data)
+	err := t.Execute(buff, td)
 	if err != nil {
 		log.Println(err)
 	}
