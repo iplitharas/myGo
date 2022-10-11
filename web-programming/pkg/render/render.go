@@ -6,23 +6,24 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"web-programming/pkg/config"
 )
+
+var app *config.AppConfig
+
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
 
 // RenderTemplate renders a template
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	// create a template cache
-	tc, err := createTemplateCache()
-	if err != nil {
-		log.Fatal(err)
-	}
 	// get requested template from cache
-	t, ok := tc[tmpl]
+	t, ok := app.TemplateCache[tmpl]
 	if !ok {
 		log.Println("not able to find template within a cache")
 	}
-
 	buff := new(bytes.Buffer)
-	err = t.Execute(buff, nil)
+	err := t.Execute(buff, nil)
 	if err != nil {
 		log.Println(err)
 	}
@@ -34,7 +35,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	// get all the files named *page.html from ./templates
 	pages, err := filepath.Glob("./templates/*.page.html")
