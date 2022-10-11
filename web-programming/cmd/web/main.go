@@ -24,11 +24,31 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot create template cache")
 	}
-	http.HandleFunc("/", handlers.Repo.Home)
-	http.HandleFunc("/about", handlers.Repo.About)
+	//http.HandleFunc("/", handlers.Repo.Home)
+	//http.HandleFunc("/about", handlers.Repo.About)
+
 	fmt.Println(fmt.Sprintf("Starting application on port: %s", portNumber))
-	err = http.ListenAndServe(portNumber, nil)
-	if err != nil {
-		return
+	srv := &http.Server{
+		Addr:              portNumber,
+		Handler:           routes(&app),
+		TLSConfig:         nil,
+		ReadTimeout:       0,
+		ReadHeaderTimeout: 0,
+		WriteTimeout:      0,
+		IdleTimeout:       0,
+		MaxHeaderBytes:    0,
+		TLSNextProto:      nil,
+		ConnState:         nil,
+		ErrorLog:          nil,
+		BaseContext:       nil,
+		ConnContext:       nil,
 	}
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	//err = http.ListenAndServe(portNumber, nil)
+	//if err != nil {
+	//	return
+	//}
 }
