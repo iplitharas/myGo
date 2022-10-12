@@ -2,21 +2,40 @@ package main
 
 import (
 	"fmt"
+	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
+	"time"
 	"web-programming/pkg/config"
 	"web-programming/pkg/handlers"
 	"web-programming/pkg/render"
 )
 
+var app config.AppConfig
+
+// session is declared as package level variable
+// to be  used from middleware,
+// for the handlers we added the session in the config.AppConfig
+var session *scs.SessionManager
+
 const portNumber = ":8080"
 
 // main is the main application function
 func main() {
-	var app config.AppConfig
+	app.InProduction = false
+	// create a big session
+	// it stores the session  by default at cookies
+	session = scs.New()
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	// to use https or http !
+	session.Cookie.Secure = app.InProduction
+
 	tc, err := render.CreateTemplateCache()
 	app.TemplateCache = tc
 	app.UseCache = false
+	app.Session = session
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)

@@ -95,3 +95,14 @@ func WriteToConsole(next http.Handler) http.Handler {
 }
 
 ```
+
+## Sessions
+Everytime we visit a web-site
+at the request the server knows our ip-address, preferred
+language etc. etc. Once we receive a response (or select a something within the page) 
+the web-server forget us. stateless
+But this is problematic for `user-authentication` that's why we use sessions (persist between
+session requests)
+
+1. https://github.com/alexedwards/scs#installation
+2. https://github.com/gorilla/sessions
