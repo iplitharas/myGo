@@ -106,3 +106,10 @@ session requests)
 
 1. https://github.com/alexedwards/scs#installation
 2. https://github.com/gorilla/sessions
+
+## Handle/server static files 
+```go
+	// handle static files (images, css, javascript files)
+	fileServer := http.FileServer(http.Dir("./static/"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
+```
