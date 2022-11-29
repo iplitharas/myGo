@@ -1,0 +1,22 @@
+### GET customers with a header
+#GET localhost:8080/customers
+#Accept: application/json
+#
+#
+#### GET customer with a header
+#GET localhost:8080/customers/1
+#Accept: application/json
+#
+#### GET customer with a header
+#GET localhost:8080/customers/2
+#Accept: application/json
+
+
+### POST customer with json body
+POST localhost:8080/customers
+Content-Type: application/json
+
+{
+  "first_name": "Ioannis",
+  "last_name": "Lithographs"
+}
