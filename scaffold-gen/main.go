@@ -15,9 +15,11 @@ type ProjectConfig struct {
 	projectType bool
 }
 
+// setupParseFlags parses the user enter configuration settings
+// returns a `ProjectConfig` or the parsing error
 func setupParseFlags(w io.Writer, args []string) (ProjectConfig, error) {
 	projectConfig := ProjectConfig{}
-	flagSet := flag.NewFlagSet("flasgset", flag.ContinueOnError)
+	flagSet := flag.NewFlagSet("projectConfigParser", flag.ContinueOnError)
 	flagSet.StringVar(&projectConfig.projectName, "n", "",
 		"Project name")
 	flagSet.StringVar(&projectConfig.projectPath, "d", "",
@@ -31,9 +33,7 @@ func setupParseFlags(w io.Writer, args []string) (ProjectConfig, error) {
 		log.Fatalf("Cannot parse user input: %s", err)
 		return ProjectConfig{}, err
 	}
-	if err != nil {
-		return ProjectConfig{}, err
-	}
+
 	return projectConfig, nil
 
 }
@@ -69,15 +69,16 @@ func main() {
 	if err != nil {
 		return
 	}
-	validationErrors := validateConf(projectConfig)
-	for _, validationError := range validationErrors {
-		_, err := fmt.Fprintf(os.Stdout, validationError.Error())
-		fmt.Fprintf(os.Stdout, "\n")
-		if err != nil {
-			return
-		}
-	}
-	if len(validationErrors) == 0 {
-		generateScaffold(os.Stdout, projectConfig)
-	}
+	fmt.Println(projectConfig)
+	//validationErrors := validateConf(projectConfig)
+	//for _, validationError := range validationErrors {
+	//	_, err := fmt.Fprintf(os.Stdout, validationError.Error())
+	//	fmt.Fprintf(os.Stdout, "\n")
+	//	if err != nil {
+	//		return
+	//	}
+	//}
+	//if len(validationErrors) == 0 {
+	//	generateScaffold(os.Stdout, projectConfig)
+	//}
 }
