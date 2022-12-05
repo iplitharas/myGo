@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+
+import "nested.proto";
+
+message MessageFive {
+  MessageOne one = 1 ;
+}

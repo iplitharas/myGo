@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+// nested types
+message MessageThree{
+  // define a message
+  message MessageFour{
+
+  }
+  // define an enum
+  enum EnumTwo{
+    ENUM_TWO_UNSPECIFIED = 0 ;
+
+  }
+  MessageFour  four = 1 ;
+  EnumTwo two =2 ;
+}
