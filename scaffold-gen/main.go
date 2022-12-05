@@ -69,16 +69,15 @@ func main() {
 	if err != nil {
 		return
 	}
-	fmt.Println(projectConfig)
-	//validationErrors := validateConf(projectConfig)
-	//for _, validationError := range validationErrors {
-	//	_, err := fmt.Fprintf(os.Stdout, validationError.Error())
-	//	fmt.Fprintf(os.Stdout, "\n")
-	//	if err != nil {
-	//		return
-	//	}
-	//}
-	//if len(validationErrors) == 0 {
-	//	generateScaffold(os.Stdout, projectConfig)
-	//}
+	validationErrors := validateConf(projectConfig)
+	for _, validationError := range validationErrors {
+		_, err := fmt.Fprintf(os.Stdout, validationError.Error())
+		fmt.Fprintf(os.Stdout, "\n")
+		if err != nil {
+			return
+		}
+	}
+	if len(validationErrors) == 0 {
+		generateScaffold(os.Stdout, projectConfig)
+	}
 }

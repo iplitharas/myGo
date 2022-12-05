@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"log"
 	"os"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -62,4 +64,57 @@ func Test_setupParseFlags(t *testing.T) {
 
 	}
 
+}
+
+func Test_validateConf(t *testing.T) {
+	testCases := []struct {
+		testCaseName   string
+		testInput      ProjectConfig
+		expectedErrors int
+	}{
+		{testCaseName: "Test case where the input is valid", testInput: ProjectConfig{
+			projectName: "SampleProjectName",
+			projectPath: "FilePath",
+			projectRepo: "RepoRUL",
+			projectType: false,
+		}, expectedErrors: 0},
+		{testCaseName: "Test case where projectName is missing", testInput: ProjectConfig{
+			projectName: "",
+			projectPath: "FilePath",
+			projectRepo: "RepoRUL",
+			projectType: false,
+		}, expectedErrors: 1},
+		{testCaseName: "Test case where projectPath is missing", testInput: ProjectConfig{
+			projectName: "",
+			projectPath: "FilePath",
+			projectRepo: "RepoRUL",
+			projectType: false,
+		}, expectedErrors: 1},
+		{testCaseName: "Test case where all settings are missing", testInput: ProjectConfig{
+			projectName: "",
+			projectPath: "",
+			projectRepo: "",
+			projectType: false,
+		}, expectedErrors: 3},
+	}
+
+	for _, testCase := range testCases {
+		errors := validateConf(testCase.testInput)
+		if len(errors) != testCase.expectedErrors {
+			t.Errorf("Test case:%s -- expected errors: #%d - got #%d errors",
+				testCase.testCaseName, testCase.expectedErrors, len(errors))
+		}
+
+	}
+}
+
+func Test_generateScaffold(t *testing.T) {
+	expectedStr := "🚀🚀 Generating scaffold for project hello-world in ./projects\n"
+	buffer := bytes.Buffer{}
+	generateScaffold(&buffer, ProjectConfig{projectName: "hello-world", projectPath: "./projects",
+		projectRepo: "some url"})
+	got := buffer.String()
+	if !strings.EqualFold(got, expectedStr) {
+		t.Errorf(got, expectedStr)
+	}
 }
