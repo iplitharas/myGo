@@ -3,42 +3,36 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 )
 
-type Address struct {
-	Type    string
-	City    string
-	Country string
-}
-
-type VCard struct {
-	FirstName string
-	LastName  string
-	Addresses []*Address
-	Remark    string
+type Person struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
 func main() {
-	pa := &Address{"private", "Aartselaar", "Belgium"}
-	wa := &Address{"work", "Boom", "Belgium"}
-	vc := VCard{"Jan", "Kersschot", []*Address{pa, wa}, "none"}
-	// fmt.Printf("%v: \n", vc) // {Jan Kersschot [0x126d2b80 0x126d2be0] none}:
-	// JSON format:
-	js, _ := json.Marshal(vc)
-	fmt.Printf("JSON format: %s", js)
-	// using an encoder:
-	file, _ := os.OpenFile("json_example.json", os.O_CREATE, 0)
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			fmt.Print(err)
-		}
-	}(file)
-	enc := json.NewEncoder(file)
-	err := enc.Encode(vc)
-	if err != nil {
-		log.Println("Error in encoding json")
+	person := Person{
+		Name: "Ioannis",
+		Age:  32,
 	}
+	fmt.Println(person)
+	tmpFile, err := os.CreateTemp(os.TempDir(), "json")
+	defer tmpFile.Close()
+	if err != nil {
+		panic(err)
+	}
+	err = json.NewEncoder(tmpFile).Encode(person)
+	if err != nil {
+		panic(err)
+	}
+	// Reset the pointer to the start of the file
+	tmpFile.Seek(0, 0)
+	var fromFile Person
+	err = json.NewDecoder(tmpFile).Decode(&fromFile)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("person back")
+	fmt.Println(fromFile)
 }
