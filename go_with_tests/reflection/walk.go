@@ -4,8 +4,7 @@ import "reflect"
 
 // https://go.dev/blog/laws-of-reflection
 
-//	walk(x interface{}, fn func(string))
-//
+// walk(x interface{}, fn func(string))
 // calls fn for all strings fields found inside. difficulty level: recursively.
 func walk(x interface{}, fn func(input string)) {
 	val := getValue(x)

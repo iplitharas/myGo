@@ -1,4 +1,4 @@
-package PointersErrors
+package pointersErrors
 
 import "testing"
 

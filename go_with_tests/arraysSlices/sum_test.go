@@ -1,4 +1,4 @@
-package ArraysSlices
+package arraysSlices
 
 import (
 	"reflect"

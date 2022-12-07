@@ -21,7 +21,7 @@ type ConfigurableSleeper struct {
 	sleep    func(time.Duration)
 }
 
-// Sleep  implementation of the interface
+// Sleep implementation of the interface
 // for the ConfigurableSleeper
 func (c *ConfigurableSleeper) Sleep() {
 	c.sleep(c.duration)
