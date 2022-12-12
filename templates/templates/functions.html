@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functions in templates</title>
+</head>
+<body>
+<ul>
+    {{ range $key, $value := . }}
+
+    <li> {{uc $key}} {{uc $value}} </li>
+    <li> {{ $key}} {{ $value}} </li>
+    {{ end }}
+
+</ul>
+    Time is: {{ . }}
+    Time with formatting {{ .}}
+</h2>
+
+</body>
+</html>

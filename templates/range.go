@@ -11,7 +11,10 @@ func main() {
 	tmp := template.Must(template.ParseGlob("templates/*"))
 
 	// write the template to `os.Stdout`
-	err := tmp.ExecuteTemplate(os.Stdout, "tmpl.html", 123)
+
+	// slice of strings
+	countries := []string{"France", "UK", "GREECE"}
+	err := tmp.ExecuteTemplate(os.Stdout, "range.html", countries)
 	if err != nil {
 		fmt.Println("error is:", err)
 	}

@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nested templates</title>
 </head>
 <body>
 <h1>
-    {{ . }}
-    {{ $variable := . }}
-    The meaning of Life is {{$variable}}
+  <p> {{ template "base" }} </p>
 </h1>
 
 </body>
