@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Requests Parsing using form</title>
+</head>
+<body>
+
+{{ if . }}
+</main>
+<ul>
+{{ range $key, $value := . }}
+     <li> {{$key}} </li>
+     <li> {{$value}} </li>
+
+    {{ end }}
+
+</ul>
+</main>
+{{ end }}
+
+<form action="/?fname=QueryValue" method="POST">
+  <input type="text" name="fname" id="fname" placeholder="Your First Name">
+  <input type="text" name="lname" id="lname" placeholder="Your First Name">
+  <input type="submit" name="submit-button" value="Click me">
+
+</form>
+
+
+</body>
+</html>
