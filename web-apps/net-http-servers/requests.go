@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"net/url"
 	"text/template"
 )
 
@@ -10,6 +11,20 @@ type indexHandler struct{}
 
 func (index indexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
+	data := struct {
+		Method        string
+		URL           *url.URL
+		Submissions   map[string][]string
+		Header        http.Header
+		Host          string
+		ContentLength int64
+	}{
+		r.Method,
+		r.URL,
+		r.Form,
+		r.Header,
+		r.Host,
+		r.ContentLength}
 	if err != nil {
 		log.Fatalf("error during parsing the form")
 	}
@@ -17,7 +32,7 @@ func (index indexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalf("error during parsing the template: %q", err)
 	}
-	err = tmp.ExecuteTemplate(w, "index.html", r.PostForm)
+	err = tmp.ExecuteTemplate(w, "index.html", data)
 	if err != nil {
 		log.Fatalf("error during exetute of template: %q", err)
 	}

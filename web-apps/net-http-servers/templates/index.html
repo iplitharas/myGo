@@ -7,16 +7,17 @@
 <body>
 
 {{ if . }}
-</main>
-<ul>
-{{ range $key, $value := . }}
-     <li> {{$key}} </li>
-     <li> {{$value}} </li>
 
-    {{ end }}
+<h2>The request method: {{ .Method }} </h2>
+<h2>The request host: {{ .Host }} </h2>
+<h2>The request Content-length: {{ .ContentLength }} </h2>
+<h2>The request URL: {{ .URL }} </h2>
+{{ range $key, $value := .Submissions }}
+ <ul>
+     <li> {{$key}}  {{$value}}</li>
+ </ul>
+{{ end }}
 
-</ul>
-</main>
 {{ end }}
 
 <form action="/?fname=QueryValue" method="POST">
