@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login-Logout Go Play Ground</title>
+</head>
+<body>
+
+<h1>Login-Logout Go play Ground</h1>
+{{ if . }}
+<h3> Welcome back {{ .FirstName}} {{ .LastName}}!! </h3>
+<ul>
+  <li><a href="/logout">Logout</a></li>
+</ul>
+{{else}}
+<h1> You must login or sign up </h1>
+<ul>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/signup">Signup</a></li>
+</ul>
+{{ end }}
+
+</body>
+</html>
