@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"text/template"
-	"time"
 )
 
 func writeCookie(w http.ResponseWriter, r *http.Request) {
@@ -14,10 +13,10 @@ func writeCookie(w http.ResponseWriter, r *http.Request) {
 }
 func deleteCookie(w http.ResponseWriter, r *http.Request) {
 	c := &http.Cookie{
-		Name:    "my-cookie",
-		Value:   "",
-		Path:    "/",
-		Expires: time.Unix(0, 0),
+		Name:   "my-cookie",
+		Value:  "",
+		Path:   "/",
+		MaxAge: -1,
 
 		HttpOnly: true,
 	}
@@ -37,7 +36,7 @@ func index(w http.ResponseWriter, r *http.Request) {
  {{ if . }}
  	{{ range  . }}
 		<ul> 
-		<li> {{ .Name}} {{ .Value }} </li> 
+		<li> Cookie name {{ .Name}} with value {{ .Value }} </li> 
 		</ul>
 		{{ end }} 
 {{else}} 
