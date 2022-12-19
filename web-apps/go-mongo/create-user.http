@@ -1,0 +1,9 @@
+### Send POST request with json body
+POST http://localhost:8081/user/
+Content-Type: application/json
+
+{
+  "name": "John",
+  "gender": "male",
+  "age":    "31"
+}

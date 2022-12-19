@@ -1,10 +1,12 @@
 package main
 
 import (
-	json2 "encoding/json"
+	"context"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"go-mongo/models"
+	"go-mongo/controllers"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
 )
@@ -14,33 +16,40 @@ func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 }
 
-// getUser Handler
-func getUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	w.Header().Set("Content-Type", "application/json")
-	user := models.User{
-		Name:   "James Bond",
-		Gender: "male",
-		Age:    "32",
-		Id:     p.ByName("id"),
-	}
-	err := json2.NewEncoder(w).Encode(user)
-	w.WriteHeader(http.StatusOK)
+func getMongoClient() *mongo.Client {
+	log.Println("Setting up MongoDB client..")
+	// Connect to our local Mongo
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
-		errorMessage := fmt.Sprintf("error trying to serialize user with id:"+
-			" %q is: %q", p.ByName("id"), err)
-		http.Error(w, errorMessage, http.StatusInternalServerError)
+		panic(err)
 	}
+
+	// Check the connection
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Connected to MongoDB!")
+	return client
 }
 
 func main() {
-
+	mongoClient := getMongoClient()
+	userController := controllers.NewUserController(mongoClient)
 	router := httprouter.New()
-	srv := http.Server{Addr: ":8080", Handler: router}
-	log.Println("Listening at: http://localhost:8080")
+	srv := http.Server{Addr: ":8081", Handler: router}
+	log.Println("Listening at: http://localhost:8081")
 	router.GET("/", index)
-	router.GET("/user/:id", getUser)
+	router.GET("/user/:id", userController.GetUser)
+	router.POST("/user/", userController.CreateUser)
 	err := srv.ListenAndServe()
 	if err != nil {
 		log.Fatalf("error trying to start the server: %q", err)
 	}
+	defer func() {
+		log.Println("Closing MongoDB client connection")
+		if err = mongoClient.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
 }
