@@ -3,7 +3,11 @@ POST http://localhost:8081/user/
 Content-Type: application/json
 
 {
-  "name": "John",
+  "name": "Will Smith",
   "gender": "male",
   "age":    "31"
 }
+
+### GET request with parameter
+DELETE  http://localhost:8081/user/63a09f4053efe6787940e0f1
+Accept: application/json
