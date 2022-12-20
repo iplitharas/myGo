@@ -21,7 +21,7 @@ func NewUserController(mongoClient *mongo.Client) *UserController {
 	return &UserController{mongoClient: mongoClient}
 }
 
-// GetUser view
+// GetUser View
 func (uc *UserController) GetUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 	user := models.User{}
