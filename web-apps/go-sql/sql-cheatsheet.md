@@ -2,13 +2,11 @@
 
 ## Table of contents
 1. [Installation](#installation)
-2. [List Databases](#list-databases)
-3. [Create Database](#create-database)
-4. [Create-table](#create-table)
-5. [Manipulation](#manipulation)
-6. [Queries](#queries)
-7. [Multiple Tables](#multiple-tables)
-8. [Aggregate Functions](#aggregate-functions)
+2. [Intro](#intro)
+3. [Manipulation](#manipulation)
+4. [Queries](#queries)
+5. [Multiple Tables](#multiple-tables)
+6. [Aggregate Functions](#aggregate-functions)
 
 
 ## Installation 
@@ -38,7 +36,9 @@ postgres=# \l
  template1 | ioannisplitharas | UTF8     | C       | C     | =c/ioannisplitharas                  +
            |                  |          |         |       | ioannisplitharas=CTc/ioannisplitharas
 ```
-## Create database
+
+## Intro
+### Create database
 ```bash
 CREATE DATABASE database-name;
 ```
@@ -68,11 +68,12 @@ SELECT current_database;
 DROP DATABASE database-name;
 ```
 
+### Create table
 
-## Create table
 The CREATE TABLE statement creates a new table in a database.
 It allows one to specify the name of the table and the name of 
 each column in the table.
+
 ```SQL
 CREATE TABLE table_name (
 column1 datatype,
@@ -89,6 +90,7 @@ Column constraints are the rules applied to the values of individual columns:
 * DEFAULT assigns a default value for the column when no value is specified.
 There can be only one **PRIMARY** KEY column per table and multiple 
 **UNIQUE** columns.
+* 
 ```SQL
 
 CREATE TABLE student (
@@ -405,6 +407,7 @@ condition **is not met**. In a `LEFT JOIN`, every row in the left table is
 returned  in the result set, 
 and **if the join condition is not met**, then `NULL` values are used to **fill
 in the columns from the right table**.
+
 
 ```SQL
 SELECT column_name(s)
