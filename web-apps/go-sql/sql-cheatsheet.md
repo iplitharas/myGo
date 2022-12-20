@@ -1,5 +1,9 @@
 ## PostgresSQL
 
+## Docs
+* [Postgresql-docs](https://www.postgresql.org/docs/current/)
+* [go-sql-docs](https://pkg.go.dev/database/sql)
+
 ## Table of contents
 1. [Installation](#installation)
 2. [Intro](#intro)
@@ -7,7 +11,7 @@
 4. [Queries](#queries)
 5. [Multiple Tables](#multiple-tables)
 6. [Aggregate Functions](#aggregate-functions)
-
+7. [Create User](#create-users)
 
 ## Installation 
 [homebrew](https://wiki.postgresql.org/wiki/Homebrew)
@@ -70,7 +74,7 @@ DROP DATABASE database-name;
 
 ### Create table
 
-The CREATE TABLE statement creates a new table in a database.
+The `CREATE TABLE` statement creates a new table in a database.
 It allows one to specify the name of the table and the name of 
 each column in the table.
 
@@ -119,8 +123,8 @@ VALUES (value1, value2);
 
 ### ALTER TABLE Statement
 
-The ALTER TABLE statement is used to modify the columns of an 
-existing table. When combined with the ADD COLUMN clause, 
+The `ALTER TABLE` statement is used to modify the columns of an 
+existing table. When combined with the `ADD COLUMN` clause, 
 it is used to add a new column.
 
 ```SQL
@@ -130,9 +134,9 @@ ADD column_name datatype;
 
 ### DELETE Statement
 
-The DELETE statement is used to delete records (rows) in a table. 
-The WHERE clause specifies which record or records that should be deleted. 
-If the WHERE clause is omitted, all records will be deleted.
+The `DELETE` statement is used to delete records (rows) in a table. 
+The `WHERE` clause specifies which record or records that should be deleted. 
+If the `WHERE` clause is omitted, all records will be deleted.
 
 ```SQL
 DELETE FROM table_name
@@ -141,7 +145,7 @@ WHERE some_column = some_value;
 ### UPDATE Statement
 
 The `UPDATE` statement is used to edit records (rows) in a table. 
-It includes a SET clause that indicates the column to edit and a WHERE clause for 
+It includes a `SET` clause that indicates the column to edit and a `WHERE` clause for 
 specifying the record(s).
 
 ```SQL
@@ -155,9 +159,9 @@ WHERE some_column = some_value;
 ### SELECT Statement
 
 The `SELECT` * statement returns all columns from the 
-provided table in the result set. 
-The given query will fetch all columns 
-and records (rows) from the movies table.
+provided table in the result set. The given query will fetch all 
+columns  and records (rows) from the movies table.
+
 ```SQL
 SELECT *
 FROM movies;
@@ -525,4 +529,37 @@ SELECT year,
 FROM movies 
 GROUP BY year
 HAVING COUNT(*) > 5;
+```
+
+## Create users
+
+### Details of users
+```bash
+\du
+```
+
+### Create user
+
+```SQL
+CREATE USER ioannis WITH PASSWORd "password";
+```
+
+### Grant privileges
+```SQL
+GRANT ALL PRIVILEGES ON DATABASE company TO ioannis;
+```
+
+### Revoke privileges
+```SQL
+REVOKE ALL PRIVILEGES ON DATABASE company TO iaonnis;
+```
+
+### ALTER 
+```SQL
+ALTER USER ioannis WITH SUPERUSER;
+```
+
+### REMOVE
+```SQL
+DROP USER ioannis;
 ```
