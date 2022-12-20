@@ -3,6 +3,8 @@
 ## Docs
 * [Postgresql-docs](https://www.postgresql.org/docs/current/)
 * [go-sql-docs](https://pkg.go.dev/database/sql)
+* [Tutorial-part-1](https://www.alexedwards.net/blog/introduction-to-using-sql-databases-in-go?hmsr=joyk.com&utm_source=joyk.com&utm_medium=referral)
+* [Tutorial-part-2](https://www.alexedwards.net/blog/organising-database-access)
 
 ## Table of contents
 1. [Installation](#installation)
